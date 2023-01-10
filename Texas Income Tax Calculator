@@ -1,0 +1,24 @@
+// Set up tax brackets
+const taxBrackets = {
+    '0-8251': 0.06,
+    '8251-33451': 0.18,
+    '33451-63651': 0.22,
+    '63651-158851': 0.26,
+    '158851-200001': 0.29,
+    '200001+': 0.33
+};
+
+// Function that calculates and prints the net income
+const calculateNetIncome = (grossIncome) => {
+    let taxableIncome = grossIncome;
+    let taxesOwed = 0;
+    // Iterate through each tax bracket
+    Object.keys(taxBrackets).forEach(bracket => {
+        const [min, max] = bracket.split('-').map(num => parseInt(num));
+        if (grossIncome > max) {
+            const amount = max - min;
+            taxesOwed += amount * taxBrackets[bracket];
+            taxableIncome -= amount;
+        } else {
+            const amount = grossIncome - min;
+            taxesOwed += amount *
